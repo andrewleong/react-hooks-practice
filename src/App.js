@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import Post from './post'
 
 const App = () => {
   const initialCount = 0
@@ -10,9 +11,15 @@ const App = () => {
     }
   ])
 
+
+  //  You can have multuple useEffect to check for different prop changes
   useEffect(() => {
-    console.log("hello")
-  })
+    console.log("Count did update", count)
+  }, [count])
+
+  useEffect(() => {
+    console.log("Post did update", posts)
+  }, [posts])
 
   return (
     <Fragment>
@@ -24,14 +31,7 @@ const App = () => {
 
       {
         posts.map((post, key) => {
-          return (
-            <div key={key}>
-              <hr />
-              <h3>Posts: </h3>
-              <p>Title: {post.title}</p>
-              <p>Body: {post.body}</p>
-            </div>
-          )
+          return <Post post={post} key={key} />
         })
       }
       <button onClick={() => {
@@ -45,6 +45,11 @@ const App = () => {
           ]
         )
       }}>Add Post</button>
+
+      <button onClick={() => {
+        setPosts([])
+      }}>Remove Posts</button>
+
     </Fragment>
   )
 }
